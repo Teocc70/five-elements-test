@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <title>測驗結果</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; }
+    .result { background: #f0f0f0; padding: 20px; border-radius: 8px; }
+  </style>
+</head>
+<body>
+  <h1>你的五行測驗結果</h1>
+  <div class="result" id="output"></div>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const scores = {
+      '木': parseInt(params.get('wood')),
+      '火': parseInt(params.get('fire')),
+      '土': parseInt(params.get('earth')),
+      '金': parseInt(params.get('metal')),
+      '水': parseInt(params.get('water')),
+    };
+
+    const descriptions = {
+      '木': '木質和綠葉香氣能促進木元素人的成長與發展，提升他們的社交技能和外向性。',
+      '火': '溫暖辛辣香氣可激發火元素人的熱情，提高自信與積極性。',
+      '土': '濃郁泥土香氣有助土元素人保持穩定、腳踏實地，提升耐心與責任感。',
+      '金': '清新香氣提升金元素人的決斷力與思維清晰，增強組織與控制感。',
+      '水': '水生香氣幫助水元素人放鬆、提升靈性與創造力，並增強適應力。'
+    };
+
+    // 找出最低分
+    const minScore = Math.min(...Object.values(scores));
+
+    // 找出所有最低分的元素
+    const lowestElements = Object.entries(scores)
+      .filter(([_, score]) => score === minScore)
+      .map(([el]) => el);
+
+    // 建立說明區塊
+    const descriptionsHTML = lowestElements.map(el => `
+      <h3>${el}（${minScore} 分）</h3>
+      <p>${descriptions[el]}</p>
+    `).join('');
+
+    const outputDiv = document.getElementById('output');
+    outputDiv.innerHTML = `
+      <h3>各五行得分：</h3>
+      <ul>
+        ${Object.entries(scores).map(([el, score]) => `<li>${el}：${score} 分</li>`).join('')}
+      </ul>
+      <h3>你目前最弱的元素${lowestElements.length > 1 ? '是：' : '是：'}${lowestElements.join('、')}</h3>
+      ${descriptionsHTML}
+    `;
+  </script>
+</body>
+</html>

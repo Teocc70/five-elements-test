@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <title>五行測驗</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; line-height: 1.6; }
+    h1 { color: #333; }
+    .question { margin: 10px 0; display: flex; align-items: center; }
+    input[type="number"] { width: 50px; margin-right: 10px; }
+  </style>
+</head>
+<body>
+  <h1>五行測驗問卷</h1>
+  <form id="quizForm">
+    <h2>木</h2>
+    <div class="question"><input type="number" min="0" max="4" required>我經常無明火起，情緒煩躁。</div>
+    <div class="question"><input type="number" min="0" max="4" required>我難以制定長期計劃並堅持。</div>
+    <div class="question"><input type="number" min="0" max="4" required>事情不如意時我容易激動。</div>
+    <div class="question"><input type="number" min="0" max="4" required>我常感生活缺乏方向感。</div>
+    <div class="question"><input type="number" min="0" max="4" required>我常感身體緊繃，特別是肩頸四肢。</div>
+
+    <h2>火</h2>
+    <div class="question"><input type="number" min="0" max="4" required>即使開心時也不覺快樂或熱情。</div>
+    <div class="question"><input type="number" min="0" max="4" required>我常感與人疏離，情感孤立。</div>
+    <div class="question"><input type="number" min="0" max="4" required>我會無來由地緊張焦慮。</div>
+    <div class="question"><input type="number" min="0" max="4" required>我常難以入睡或夜間煩躁。</div>
+    <div class="question"><input type="number" min="0" max="4" required>我覺得生活缺乏熱情與自發性。</div>
+
+    <h2>土</h2>
+    <div class="question"><input type="number" min="0" max="4" required>我常過度思考或擔憂。</div>
+    <div class="question"><input type="number" min="0" max="4" required>壓力大時我會渴望甜食或安慰食物。</div>
+    <div class="question"><input type="number" min="0" max="4" required>我常感情緒疲憊或照顧他人太多。</div>
+    <div class="question"><input type="number" min="0" max="4" required>我的消化不太穩定、緩慢或敏感。</div>
+    <div class="question"><input type="number" min="0" max="4" required>我感覺不接地氣、容易分心。</div>
+
+    <h2>金</h2>
+    <div class="question"><input type="number" min="0" max="4" required>我常緊抓著過去的記憶、情感或物品。</div>
+    <div class="question"><input type="number" min="0" max="4" required>我對自己或他人過於挑剔。</div>
+    <div class="question"><input type="number" min="0" max="4" required>我感覺缺乏人生意義或目的。</div>
+    <div class="question"><input type="number" min="0" max="4" required>我呼吸淺或常有呼吸系統問題。</div>
+    <div class="question"><input type="number" min="0" max="4" required>我難以劃清界線或拒絕他人。</div>
+
+    <h2>水</h2>
+    <div class="question"><input type="number" min="0" max="4" required>即使休息過也常感身心疲憊。</div>
+    <div class="question"><input type="number" min="0" max="4" required>我常感恐懼、不安或缺乏自信。</div>
+    <div class="question"><input type="number" min="0" max="4" required>即使必要我也常避免冒險。</div>
+    <div class="question"><input type="number" min="0" max="4" required>我的下背、膝蓋或骨頭常感無力或酸痛。</div>
+    <div class="question"><input type="number" min="0" max="4" required>我與自己的直覺或內在智慧疏離。</div>
+
+    <br>
+    <button type="submit">提交</button>
+  </form>
+
+  <script>
+    const form = document.getElementById('quizForm');
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const inputs = form.querySelectorAll('input[type="number"]');
+      const scores = [0, 0, 0, 0, 0]; // 木, 火, 土, 金, 水
+
+      inputs.forEach((input, index) => {
+        const value = parseInt(input.value);
+        const group = Math.floor(index / 5);
+        scores[group] += value;
+      });
+
+      const query = `?wood=${scores[0]}&fire=${scores[1]}&earth=${scores[2]}&metal=${scores[3]}&water=${scores[4]}`;
+      window.location.href = 'result.html' + query;
+    });
+  </script>
+</body>
+</html>
